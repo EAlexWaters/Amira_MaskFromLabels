@@ -1,0 +1,13 @@
+# Amira Script
+#
+# .rc for scro maskFromLabels
+#############################################################
+
+module -name "Mask From Labels" \
+    -language "tcl" \
+    -file "share/script-objects/maskFromLabels.scro" \
+    -package "hxscriptobj" \
+    -primary HxSpatialData \
+    -category "{CAMI Custom}" \
+    -icon "TVDefScriptObject" \
+    -customHelp "maskFromLabels.html"

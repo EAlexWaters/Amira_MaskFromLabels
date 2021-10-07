@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>Avizo Online Help</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="../doc/html/Common.css" type="text/css" />
+<link rel="stylesheet" href="../doc/html/docHTML.css" type="text/css" />
+<script type="text/javascript" src="../doc/html/json2.js"></script>
+<script type="text/javascript" src="../doc/html/generatedConfig.js"></script>
+<script type="text/javascript" src="../doc/html/helpers.js"></script>
+<script type="text/javascript" src="../doc/html/scrollHandler.js"></script>
+<script type="text/javascript" src="../doc/html/fastEditionIE.js"></script>
+</head>
+<body lang="en">
+
+<script>displayComboBox();</script>
+<!----- Build by doc2html - BuildId:1612278060 ----->
+
+<p><span class="label" id="A1">
+<div class="breadcrumbs">
+<ul><li><script>var productname=getCookie("isProduct");if(productname=="Avizo")document.write("<a href=\"../usersguide/index.html\">");else if(productname=="Amira")document.write("<a href=\"../usersguide/index.html\">");else if(productname=="PerGeos")document.write("<a href=\"../PerGeos/index-PerGeos.html\">");else if(productname=="A2DAnalyzer")document.write("<a href=\"../\">");</script><IMG SRC="../home.png" ALT="Home" BORDER="0"></a><li>
+<li class="separator"> > </li>
+<li><a href="../doc/html/usersguide/HxIndexModule.html">Modules</a></li>
+<li class="separator"> > </li>
+<li><script>var productCookie=getCookie("isProduct");if (productCookie=="A2DAnalyzer") document.write("Analyzer");
+else if (productCookie=="PerGeos") document.write("PerGeos");
+else if (productCookie=="Amira") document.write("Amira");
+else if (productCookie=="Avizo") document.write("Avizo Lite");
+</script></li>
+<li class="separator"> > </li>
+<li>Mask from Labels</li>
+</ul>
+</div>
+
+<H2 class="genericEntry">Module: Mask From Labels <EM>(<script>var productCookie=getCookie("isProduct");if (productCookie=="A2DAnalyzer") document.write("Analyzer");
+else if (productCookie=="PerGeos") document.write("PerGeos");
+else if (productCookie=="Amira") document.write("Amira");
+else if (productCookie=="Avizo") document.write("Avizo Lite");
+</script>)</EM></H2></span>
+<!-- HxIndex: "" "Module" "Convert Image Type" "Changes the primitive data type or converts bytes to labels" -->
+<!-- HxFeatureId="HxCastField" -->
+<h3 class="subSectionHxObjectHxEditor">Description:</h3>
+<BLOCKQUOTE>
+
+This is a custom module that allows the user to extract portions of a dataset as
+described by a label field. It is intended for use in applications such as 
+extracting the skeleton from a CT dataset, multiple organs from an MRI dataset, etc.
+<P>
+This module accepts a connection to the original dataset and to a 
+<a class="link" href="../doc/html/hxfield/HxUniformLabelField3.html#A1">Label Field</a>, which is the type used to
+store segmentation results in <script>var productname=getCookie("isProduct");if(productname=="Avizo")document.write("Avizo");else if(productname=="Amira")document.write("Amira");else if(productname=="PerGeos")document.write("PerGeos");else if(productname=="A2DAnalyzer")document.write("Analyzer");</script>.
+For each material occurring in the incoming label field a corresponding
+masked dataset will be created. The resultant datasets will be named based on the label names.
+<P>
+Select the checkbox if auto cropping is desired and
+press the <EM>Apply</EM> button to start the computation.
+<P>
+</BLOCKQUOTE>
+
+
+<P>
+<h3 class="subSectionHxObjectHxEditor">Connections:</h3>
+<BLOCKQUOTE>
+
+<span class="label" id="A2"><B>Data</B></span>
+<TT>[required]</TT><BR>
+The scalar field to be masked.
+<P>
+<B>Label Field</B>
+<span class="label" id="A2"><B>Data</B></span>
+<TT>[required]</TT><BR>
+The label field to be applied as a series of masks (one per material).
+<P>
+</BLOCKQUOTE>
+
+
+<P>
+<h3 class="subSectionHxObjectHxEditor">Ports:</h3>
+<BLOCKQUOTE>
+
+<span class="label" id="A3"><B>Auto crop masked data</B></span>
+
+Determines whether masked data will be auto cropped.
+
+If the checkbox is not selected, the masked data will have a bounding box
+identical to that of the original data.
+
+If the checkbox is selected, an auto crop operation will be performed to remove excess zero values 
+after masking. The resulting data will have the same resolution and spatial orientation
+as the original data but a smaller bounding box.
+<P>
+
+</BLOCKQUOTE>
+
+
+<P>
+
+
+</p></body>
+</html>

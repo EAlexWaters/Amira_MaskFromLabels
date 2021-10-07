@@ -1,0 +1,111 @@
+#PerGeos-Script-Object
+#
+
+# #########################################################################
+# maskFromLabels script object
+#
+# Updated 7/6/2021 
+# E. Alex Waters
+#
+# This module iterates through the label fields attached to a dataset,
+# and for each label field present, it performs a masking operation to
+# extract the image data corresponding to that label. 
+#
+# Optionally, you can select a checkbox to enable auto cropping of the
+# masked data to remove blank space around the masked object. Other spatial
+# geometry is retained.
+#
+# #########################################################################
+
+############################################################################
+"$this" proc constructor {} {
+    "$this" newPortConnection labelField HxSpatialData
+    "$this" labelField setLabel "Label Field"
+    "$this" newPortDoIt doit
+    "$this" script hide  #change hide to show if you want to be able to reload the script with Amira running
+	"$this" newPortToggleList toggleCrop 1
+	"$this" toggleCrop setValue 1 1
+	"$this" toggleCrop setLabel "Auto crop masked data"
+}
+
+############################################################################
+"$this" proc compute {} {
+    # Check if the button Apply was hit. Nothing is done if it was not.
+    if { ![$this doit wasHit 0] } {
+        return
+    } 
+	
+    # If no data is specified at Data port, the message "please connect a Spatial Data" is displayed
+    set dataObject ["$this" data source]
+    if { $dataObject == "" } {
+        echo "Please connect a Spatial Data object to the Data port"
+        return
+    }	
+	
+	# If no data is specified at Label Data port, the message "please connect a Spatial Data" is displayed
+    set labelObject ["$this" labelField source]
+    if { $labelObject == "" } {
+        echo "Please connect a Label object to the Label Data port"
+        return
+    }
+	
+	set toggleValue ["$this" toggleCrop getValue 0]
+	echo "toggle value is "
+	echo $toggleValue
+	
+	set labelRange [$labelObject getRange]
+	set rmin [lindex $labelRange 0]
+	set rmax [lindex $labelRange 1]
+	
+	for {set i $rmin} {$i < $rmax + 1} {incr i} {
+		
+		set curMaterial [$labelObject getMaterialName $i]
+		
+		if { $curMaterial == "Exterior" } {
+			echo "Skipping exterior"
+		} elseif { $curMaterial == "" } {
+			echo "Empty material"
+		} else {
+			echo $i
+			echo $curMaterial
+			set hideNewModules 0
+			set arithName "Arithmetic"
+			append arithName $curMaterial
+			create HxArithmetic $arithName
+			$arithName inputA connect $dataObject
+			$arithName inputB connect $labelObject
+			set expression a*(b==$i)
+			$arithName expr0 setState $expression
+			$arithName applyTransformToResult 1
+			$arithName fire
+			
+			set hideNewModules 0
+			set maskedData [ $dataObject getLabel ]
+			set maskedData [ string trimright $maskedData ".am" ]
+			append maskedData .$curMaterial
+			[ $arithName create result ] setLabel $maskedData
+			$maskedData fire
+			$maskedData select
+			
+			remove $arithName
+			
+			if $toggleValue {
+				$maskedData crop -auto 0.01
+			}
+		}
+	}
+	return
+}
+
+############################################################################
+"$this" proc update {} {
+}
+
+############################################################################
+"$this" proc destructor {} {
+}
+
+############################################################################
+proc openDialog {} {
+    theMsg info "Hello World!"
+}
